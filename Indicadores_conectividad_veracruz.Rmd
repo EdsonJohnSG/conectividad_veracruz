@@ -44,10 +44,10 @@ url <- "https://www.inegi.org.mx/contenidos/programas/ccpv/2020/datosabiertos/it
 #### Establecer directorio de trabajo y crear carpeta de extracción
 
 ```{r}
-raiz=setwd("/Users/edsonsanchezgonzalez/Desktop/")
+raiz=setwd("/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz")
 dir.create("censo",showWarnings = F)
-directorio=paste0(raiz,"censo/")
-setwd(directorio)
+#directorio=paste0(raiz,"censo/")
+#setwd(directorio)
 
 ```
 
@@ -55,7 +55,7 @@ setwd(directorio)
 
 ```{r}
 if (!file.exists("conjunto_de_datos_iter_30CSV20.csv")) {
-  download.file(url,destfile = "censo.zip",quiet = FALSE, mode="wb")
+  download.file(url,destfile = "censo.zip",quiet = FALSE, mode="wb")}
 ```
 
 
