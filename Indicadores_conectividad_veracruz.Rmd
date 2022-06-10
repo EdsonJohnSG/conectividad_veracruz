@@ -45,17 +45,17 @@ url <- "https://www.inegi.org.mx/contenidos/programas/ccpv/2020/datosabiertos/it
 
 ```{r}
 raiz=setwd("/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz")
-dir.create("censo",showWarnings = F)
-#directorio=paste0(raiz,"censo/")
+dir.create("Datos",showWarnings = F)
+directorio=paste0(raiz,"/Datos")
 #setwd(directorio)
 
 ```
 
-#### #Se establece que, si no existe el archivo viviendas, se descargue el zip de la URL de INEGI
+#### #Se establece que, si no existe el archivo de datos de Veracruz, se descargue el zip de la URL de INEGI
 
 ```{r}
 if (!file.exists("conjunto_de_datos_iter_30CSV20.csv")) {
-  download.file(url,destfile = "censo.zip",quiet = FALSE, mode="wb")}
+  download.file(url,destfile = "Datos.zip",quiet = FALSE, mode="wb")}
 ```
 
 
