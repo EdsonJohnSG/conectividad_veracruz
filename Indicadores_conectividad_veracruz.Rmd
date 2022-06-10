@@ -2,7 +2,9 @@
 title: "Indicadores de conectividad en los municipios del estado de Veracruz"
 author: "Edson John Sanchez G."
 date: "6/10/2022"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -41,12 +43,15 @@ rm(list = ls())
 url <- "https://www.inegi.org.mx/contenidos/programas/ccpv/2020/datosabiertos/iter/iter_30_cpv2020_csv.zip"
 ```
 
-#### Establecer directorio de trabajo y crear carpeta de extracción
+#### Establecer directorio de trabajo y crear carpeta de extracción. Es importante aclarar que el Knit no se puede usar el setwd(), por lo tanto, hay que codificar el el cambio de directorio de trabajo desde el setup de knit.  
 
-```{r}
-raiz=setwd("/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz")
-dir.create("Datos",showWarnings = F)
-directorio=paste0(raiz,"/Datos")
+
+```{r setup, include=FALSE, echo=FALSE}
+require("knitr")
+opts_knit$set(root.dir = "/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz/Datos")
+#raiz=setwd("/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz")
+#dir.create("Datos",showWarnings = F)
+#directorio=paste0(raiz,"/Datos")
 #setwd(directorio)
 
 ```
@@ -59,22 +64,26 @@ if (!file.exists("conjunto_de_datos_iter_30CSV20.csv")) {
 ```
 
 
-#### #Usaremos Winrar como opción para extracción
-```{r}
-winrar=shQuote("C:/Program Files/WinRAR/WinRAR")
-  file="censo.zip"
-  dest=directorio
-```
+#### Se busca extraer la base de Zip. 
+```{r setup, include=FALSE, echo=FALSE}
+require("knitr")
+opts_knit$set(root.dir = "/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz/iter_30_cpv2020/conjunto_de_datos/")
 
-  
-### #Ejecución de la extracción
-```{r}
-cmd=paste(winrar, ' e ',file, ' -ir!*.*','"',dest,'"',sep='')
-  system(cmd)
-}
+unzip("Datos.zip")
 
 ```
- 
+
+### Fijo nuevo directorio de trabajo. Es importante aclarar que el Knit no se puede usar el setwd(), por lo tanto, hay que codificar el el cambio de directorio de trabajo desde el setup de knit.  
+
+```{r setup, include=FALSE, echo=FALSE}
+#require("knitr")
+opts_knit$set(root.dir = "/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz/iter_30_cpv2020/conjunto_de_datos/")
+
+
+#directorio=paste0(raiz,"iter_30_cpv2020/conjunto_de_datos/")
+#setwd(directorio)
+```
+
 
 ### Importamos las librerias que utilizaremos, en este caso tidyverse y dplyr.
 
@@ -88,9 +97,9 @@ library(dplyr)
 ### Se importa la base de datos del estado de Veracruz
 
 ```{r}
-Veracruz <- read.csv("conjunto_de_datos_iter_30CSV20.csv")
-View(Veracruz)
-
+Veracruz <- read.csv("/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz/iter_30_cpv2020/conjunto_de_datos/conjunto_de_datos_iter_30CSV20.csv")
+#View(Veracruz)
+head(Veracruz)
 ```
 
 ### Paso 1: Se eligen solo las variables que se utilizarán para construir los indicadores de conectividad antes descritos.
@@ -111,7 +120,9 @@ Base_2<- select(Veracruz,"ENTIDAD", "NOM_ENT", "MUN", "NOM_MUN","LOC","NOM_LOC",
   mutate(Porcentaje_SinInternet_PC=as.numeric(VPH_SINCINT)/as.numeric(VIVTOT)*100) %>% 
   mutate(Porcentaje_SinTic=as.numeric(VPH_SINTIC)/as.numeric(VIVTOT)*100) %>% 
   mutate(Categoria_internet=cut(Porcentaje_Internet,breaks = c(0,11.85,18.98,27.46,Inf), 
-  labels = c("Muy bajo", "bajo", "medio", "alto")))
+  labels = c("Muy bajo", "Bajo", "Medio", "Alto")))
+
+head(Base_2)
 ```
 
 
