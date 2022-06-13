@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Indicadores de conectividad e los municipios de Veracruz.
 
-#### Este archivo contiene cÃ³digo para generar indicadores de conectividad de los diferentes municipios de veracruz. Por ejemplo:
+#### Este archivo contiene c�digo para generar indicadores de conectividad de los diferentes municipios de veracruz. Por ejemplo:
 * Porcentaje total de hogares con internet.
 * Porcentaje total de hogares con acceso a un celular.
 * Porcentaje total de hogares con acceso a television.
@@ -35,7 +35,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #### Limpiamos nuestro entorno
 ```{r}
-rm(list = ls())
+# rm(list = ls())
 ```
 
 #### URL de datos de Veracruz
@@ -46,9 +46,9 @@ url <- "https://www.inegi.org.mx/contenidos/programas/ccpv/2020/datosabiertos/it
 #### Establecer directorio de trabajo y crear carpeta de extracción. Es importante aclarar que el Knit no se puede usar el setwd(), por lo tanto, hay que codificar el el cambio de directorio de trabajo desde el setup de knit.  
 
 
-```{r setup, include=FALSE, echo=FALSE}
-require("knitr")
-opts_knit$set(root.dir = "/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz/Datos")
+```{r, include=FALSE, echo=FALSE}
+#require("knitr")
+#opts_knit$set(root.dir = "/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz/Datos")
 #raiz=setwd("/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz")
 #dir.create("Datos",showWarnings = F)
 #directorio=paste0(raiz,"/Datos")
@@ -65,9 +65,9 @@ if (!file.exists("conjunto_de_datos_iter_30CSV20.csv")) {
 
 
 #### Se busca extraer la base de Zip. 
-```{r setup, include=FALSE, echo=FALSE}
-require("knitr")
-opts_knit$set(root.dir = "/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz/iter_30_cpv2020/conjunto_de_datos/")
+```{r, include=FALSE, echo=FALSE}
+#require("knitr")
+#opts_knit$set(root.dir = "/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz/iter_30_cpv2020/conjunto_de_datos/")
 
 unzip("Datos.zip")
 
@@ -75,9 +75,9 @@ unzip("Datos.zip")
 
 ### Fijo nuevo directorio de trabajo. Es importante aclarar que el Knit no se puede usar el setwd(), por lo tanto, hay que codificar el el cambio de directorio de trabajo desde el setup de knit.  
 
-```{r setup, include=FALSE, echo=FALSE}
+```{r, include=FALSE, echo=FALSE}
 #require("knitr")
-opts_knit$set(root.dir = "/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz/iter_30_cpv2020/conjunto_de_datos/")
+#opts_knit$set(root.dir = "/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz/iter_30_cpv2020/conjunto_de_datos/")
 
 
 #directorio=paste0(raiz,"iter_30_cpv2020/conjunto_de_datos/")
@@ -97,7 +97,7 @@ library(dplyr)
 ### Se importa la base de datos del estado de Veracruz
 
 ```{r}
-Veracruz <- read.csv("/Users/edsonsanchezgonzalez/Desktop/conectividad_veracruz/iter_30_cpv2020/conjunto_de_datos/conjunto_de_datos_iter_30CSV20.csv")
+Veracruz <- read.csv("iter_30_cpv2020/conjunto_de_datos/conjunto_de_datos_iter_30CSV20.csv")
 #View(Veracruz)
 head(Veracruz)
 ```
