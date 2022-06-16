@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Indicadores de conectividad e los municipios de Veracruz.
 
-#### Este archivo contiene c�digo para generar indicadores de conectividad de los diferentes municipios de veracruz. Por ejemplo:
+#### Este archivo contiene código para generar indicadores de conectividad de los diferentes municipios de veracruz. Por ejemplo:
 * Porcentaje total de hogares con internet.
 * Porcentaje total de hogares con acceso a un celular.
 * Porcentaje total de hogares con acceso a television.
@@ -98,8 +98,9 @@ library(dplyr)
 
 ```{r}
 Veracruz <- read.csv("iter_30_cpv2020/conjunto_de_datos/conjunto_de_datos_iter_30CSV20.csv")
-#View(Veracruz)
-head(Veracruz)
+
+Veracruz1 <- head(Veracruz,5)
+knitr::kable(Veracruz1)
 ```
 
 ### Paso 1: Se eligen solo las variables que se utilizarán para construir los indicadores de conectividad antes descritos.
@@ -122,9 +123,31 @@ Base_2<- select(Veracruz,"ENTIDAD", "NOM_ENT", "MUN", "NOM_MUN","LOC","NOM_LOC",
   mutate(Categoria_internet=cut(Porcentaje_Internet,breaks = c(0,11.85,18.98,27.46,Inf), 
   labels = c("Muy bajo", "Bajo", "Medio", "Alto")))
 
-head(Base_2)
+Base_2a <- head(Base_2,216)
+knitr::kable(Base_2a)
 ```
 
+```{r}
+#install.packages("flextable")
+```
+
+```{r}
+library(flextable)
+
+
+Base_2a %>% 
+  flextable() %>% 
+  autofit() %>% #autoajustar
+  fix_border_issues(part = "all") %>% 
+  bold(part = "header") %>% #para poner en negritas
+  align(align = "center", part = "all") %>% #para alinear
+  color(., ~ Porcentaje_Internet > 50, ~ Porcentaje_Internet, color = "blue") %>% 
+  color(., ~ Porcentaje_Celular < 25, ~ Porcentaje_Celular, color = "#2ca25f") 
+#%>% 
+ # color(., ~ Porcentaje_Internet > 55, ~ Porcentaje_Internet, color = "#green")
+  
+  
+```
 
 
 
